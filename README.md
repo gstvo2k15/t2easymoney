@@ -19,6 +19,10 @@ This project simulates a process of "cracking" a 4-digit ATM PIN in a visual and
 ## Requirements
 
 - Docker installed on your system.
+- Packages for reproduce sounds:
+  ```bash
+  sudo apt update -yqq && sudo apt install -yqq alsa-utils
+  ```
 
 ## Usage
 
@@ -31,7 +35,7 @@ This project simulates a process of "cracking" a 4-digit ATM PIN in a visual and
 2. Run the container:
 
    ```bash
-   docker run --rm -it pin-cracker
+   docker run --rm -it --device /dev/snd pin-cracker
    ```
 
 ## Technical Details
