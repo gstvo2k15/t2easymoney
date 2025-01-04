@@ -14,7 +14,7 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies
-RUN pip install --no-cache-dir simpleaudio numpy colorama
+RUN pip install --no-cache-dir simpleaudio numpy colorama keyboard
 
 # Entry point
 CMD ["python3", "pin_simulator.py"]

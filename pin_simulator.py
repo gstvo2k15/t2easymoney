@@ -1,4 +1,4 @@
-
+import keyboard
 import random
 import time
 import os
@@ -46,7 +46,8 @@ def refine_numbers(numbers):
         numbers = numbers[: len(numbers) // 2]
         clear_screen()
         display_numbers(numbers)
-        play_tone(400, 200)  # Play sound for reduction
+        # Play sound for reduction
+        play_tone(400, 200)
         time.sleep(0.5)
 
     # Refine each digit to the correct PIN
@@ -56,7 +57,8 @@ def refine_numbers(numbers):
             pin += random.choice(number[i])
             clear_screen()
             display_numbers([pin.ljust(4, "_")])
-            play_tone(400 + int(pin[-1]) * 50, 200)  # Play sound for each digit
+            # Play sound for each digit
+            play_tone(400 + int(pin[-1]) * 50, 200)  
             time.sleep(0.2)
         pin = pin[:4]
 
@@ -66,7 +68,8 @@ def main():
     clear_screen()
     print(Fore.YELLOW + "ATM ACCESS PROGRAM")
     print(Fore.YELLOW + "Press any key to begin the simulation...")
-    input()  # Wait for user to press Enter
+    # Wait for user to press Enter
+    keyboard.read_event()
 
     # Generate random numbers
     random_numbers = generate_random_numbers(16, 4)
@@ -79,7 +82,8 @@ def main():
     # Display the final PIN
     clear_screen()
     print(Fore.GREEN + f"PIN CRACKED: {pin}")
-    play_tone(800, 500)  # Victory sound
+    # Victory sound
+    play_tone(800, 500)
     print(Fore.RED + "\nAccess Granted. Unauthorized use detected. Exiting...")
 
 if __name__ == "__main__":
