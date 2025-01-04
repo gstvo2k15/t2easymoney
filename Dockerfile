@@ -1,7 +1,7 @@
 # Base image
 FROM python:3.10-slim
 
-# Install build tools and libraries required for simpleaudio
+# Install system dependencies for simpleaudio
 RUN apt-get update && apt-get install -y \
     gcc \
     libasound2-dev \
@@ -13,8 +13,9 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Install dependencies
-RUN pip install --no-cache-dir simpleaudio numpy colorama keyboard
+# Install Python dependencies
+RUN pip install --no-cache-dir simpleaudio numpy colorama
 
 # Entry point
 CMD ["python3", "pin_simulator.py"]
+

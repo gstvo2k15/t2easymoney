@@ -1,10 +1,17 @@
-import keyboard
+"""
+ATM PIN Cracker Simulation
+Simulates the process of cracking a 4-digit ATM PIN with sound and visual effects.
+"""
+
+import sys
+import os
+import tty
+import termios
 import random
 import time
-import os
-import simpleaudio as sa
+import simpleaudio as sa # pylint: disable=import-error
 import numpy as np
-from colorama import Fore, Style, init
+from colorama import Fore, init
 
 # Initialize colorama
 init(autoreset=True)
@@ -14,6 +21,16 @@ COLORS = [Fore.RED, Fore.GREEN, Fore.BLUE, Fore.YELLOW, Fore.CYAN]
 def clear_screen():
     """Clear the terminal screen for a retro effect."""
     os.system("clear" if os.name == "posix" else "cls")
+
+def wait_for_any_key():
+    """Wait for any key press."""
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setraw(fd)
+        sys.stdin.read(1)  # Wait for a single key press
+    finally:
+        termios.tcsetattr(fd, termios.TCSANOW, old_settings)
 
 def generate_random_numbers(count, length):
     """Generate a list of random numbers with a fixed length."""
@@ -46,7 +63,6 @@ def refine_numbers(numbers):
         numbers = numbers[: len(numbers) // 2]
         clear_screen()
         display_numbers(numbers)
-        # Play sound for reduction
         play_tone(400, 200)
         time.sleep(0.5)
 
@@ -57,19 +73,18 @@ def refine_numbers(numbers):
             pin += random.choice(number[i])
             clear_screen()
             display_numbers([pin.ljust(4, "_")])
-            # Play sound for each digit
-            play_tone(400 + int(pin[-1]) * 50, 200)  
+            play_tone(400 + int(pin[-1]) * 50, 200)
             time.sleep(0.2)
         pin = pin[:4]
 
     return pin
 
 def main():
+    """Main function to execute the ATM PIN cracker simulation."""
     clear_screen()
     print(Fore.YELLOW + "ATM ACCESS PROGRAM")
     print(Fore.YELLOW + "Press any key to begin the simulation...")
-    # Wait for user to press Enter
-    keyboard.read_event()
+    wait_for_any_key()
 
     # Generate random numbers
     random_numbers = generate_random_numbers(16, 4)
@@ -82,7 +97,6 @@ def main():
     # Display the final PIN
     clear_screen()
     print(Fore.GREEN + f"PIN CRACKED: {pin}")
-    # Victory sound
     play_tone(800, 500)
     print(Fore.RED + "\nAccess Granted. Unauthorized use detected. Exiting...")
 
