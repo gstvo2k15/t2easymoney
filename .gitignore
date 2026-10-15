@@ -11,3 +11,4 @@ __pycache__/
 scripts/*
 tests/*
 assets/*
+*.png
