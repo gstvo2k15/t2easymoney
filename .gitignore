@@ -1,0 +1,13 @@
+.*
+!.gitignore
+data*
+skills*
+__pycache__/
+*.py[cod]
+*.mp4
+*.MP4
+*.png
+*.PNG
+scripts/*
+tests/*
+assets/*
