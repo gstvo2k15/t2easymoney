@@ -158,7 +158,7 @@ class Simulator:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mute", action="store_true", help="Disable extracted video sound")
+    parser.add_argument("--mute", action="store_true", help="Disable keyboard and electronic sound effects")
     parser.add_argument("--fullscreen", action="store_true")
     parser.add_argument("--autoplay", action="store_true", help="Start without waiting for a key")
     parser.add_argument("--snapshot", type=Path, help="Save a frame without opening a window")

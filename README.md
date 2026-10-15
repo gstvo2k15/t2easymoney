@@ -26,10 +26,14 @@ el actor. La aplicación reproduce la secuencia de la pantalla de forma continua
 - Reducción horizontal durante tres segundos hasta el PIN aleatorio de esta ejecuci?n.
 - Cuatro filas con el PIN generado, `PIN IDENTIFICATION NUMBER: XXXX` y cursor parpadeante.
 
-El marco, la iluminación y el grano se dibujan mediante código. No se reproduce
-el vídeo dentro de la aplicación. La textura, la tipografía y los pitidos son
-aproximaciones; no son los recursos originales de la película. Los tiempos de
-la animación continua interpretan los cortes del montaje.
+El marco y la textura LCD se dibujan mediante codigo. El audio de
+`assets/identification.wav` procede de la pista original de `easymoney.mp4`
+(segmentos 2,45-4,45 s y 6-9 s), sin efectos sintetizados. Se aplica supresion
+del centro estereo y filtrado espectral para atenuar la voz. Al compartir
+frecuencias, el filtrado tambien puede modificar parte del timbre de los efectos;
+no garantiza una separacion perfecta. Conserva cinco segundos de duracion.
+Para regenerarlo: `python scripts/generate_audio.py` (requiere FFmpeg, NumPy y
+SciPy). Estas herramientas no son necesarias para ejecutar la aplicacion.
 
 ## Capturas reproducibles
 

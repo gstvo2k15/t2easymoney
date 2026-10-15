@@ -1,4 +1,4 @@
-﻿"""Check the visible sequence, independently of the window and audio device."""
+"""Check the visible sequence, independently of the window and audio device."""
 import unittest
 import os
 from unittest.mock import patch
@@ -59,7 +59,7 @@ class ApplicationTests(unittest.TestCase):
                 with patch("pygame.event.get", side_effect=[[event], AssertionError("Enter did not exit")]):
                     app.run()
 
-    def test_extracted_audio_plays_once_and_stops_on_exit(self):
+    def test_clean_audio_plays_once_and_stops_on_exit(self):
         app = Simulator(pygame)
         self.assertIsNotNone(app.sound)
         self.assertAlmostEqual(app.sound.get_length(), 5, places=2)
