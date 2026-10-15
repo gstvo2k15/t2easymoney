@@ -1,57 +1,56 @@
+# PIN Identification Program
 
-# ATM PIN Cracker Simulation
+Simulación gráfica local de la pantalla que aparece en `easymoney.mp4`.
+No se conecta a dispositivos ni obtiene PIN reales.
 
-This project simulates a process of "cracking" a 4-digit ATM PIN in a visual and auditory manner, mimicking old-school hacking aesthetics.
+## Ejecutar (Windows, Linux o macOS)
 
-## Features
+```sh
+python -m pip install -r requirements.txt
+python pin_simulator.py
+```
 
-- Randomly generated numbers that gradually refine to a 4-digit PIN.
-- Colorful, retro-styled terminal output.
-- Real-time sound effects to enhance the experience.
-- Fully contained within a Docker environment for portability.
+Pulsa una tecla (excepto Enter/Esc) para iniciar y `R` para volver al principio.
+`Enter` (tambi?n el num?rico) o `Esc` cierran el programa en cualquier momento.
+Cada inicio genera un PIN aleatorio de cuatro cifras, incluidos ceros iniciales.
+La ventana se puede redimensionar y conserva la proporción 16:9.
+Opciones: `--fullscreen`, `--mute` y `--autoplay`.
 
-## How It Works
+## Referencia visual
 
-1. The program generates a grid of random numbers.
-2. Numbers are refined in each step until only 4 digits remain.
-3. A PIN is "cracked" and displayed with accompanying sound effects.
+El clip dura 10,63 segundos y alterna la pantalla con planos del teclado y
+el actor. La aplicación reproduce la secuencia de la pantalla de forma continua:
 
-## Requirements
+- Cabecera ASCII `PIN IDENTIFICATION PROGRAM` y `Strike a key when ready ...`.
+- Matriz monocroma de diez filas: llenado y actualización durante dos segundos.
+- Reducción horizontal durante tres segundos hasta el PIN aleatorio de esta ejecuci?n.
+- Cuatro filas con el PIN generado, `PIN IDENTIFICATION NUMBER: XXXX` y cursor parpadeante.
 
-- Docker installed on your system.
-- Packages for reproduce sounds:
-  ```bash
-  sudo apt update -yqq && sudo apt install -yqq alsa-utils
-  ```
+El marco, la iluminación y el grano se dibujan mediante código. No se reproduce
+el vídeo dentro de la aplicación. La textura, la tipografía y los pitidos son
+aproximaciones; no son los recursos originales de la película. Los tiempos de
+la animación continua interpretan los cortes del montaje.
 
-## Usage
+## Capturas reproducibles
 
-1. Build the Docker image:
+```sh
+python pin_simulator.py --snapshot inicio.png --ready
+python pin_simulator.py --snapshot matriz.png --at 1
+python pin_simulator.py --snapshot reduccion.png --at 3.5
+python pin_simulator.py --snapshot resultado.png --at 5
+python -m unittest discover -s tests -v
+```
 
-   ```bash
-   docker build -t pin-cracker .
-   ```
+Las capturas funcionan sin pantalla ni dispositivo de audio.
 
-2. Run the container:
+## Docker (Linux con X11)
 
-   ```bash
-   docker run --rm -it --device /dev/snd pin-cracker
-   ```
+```sh
+docker build -t pin-simulator .
+docker run --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:ro pin-simulator
+```
 
-## Technical Details
-
-- **Programming Language**: Python 3.10
-- **Dependencies**:
-  - `simpleaudio`: For sound effects.
-  - `numpy`: To generate sine waves for tones.
-  - `colorama`: For colored terminal output.
-
-## Design Principles
-
-This project adheres to the following principles:
-- **DRY**: The code is modular and avoids redundancy.
-- **KISS**: The logic is simple and easy to follow.
-
-## Disclaimer
-
-This is a simulation for educational purposes and entertainment only. Unauthorized access to ATMs or any other device is illegal.
+Requiere que el servidor X11 permita la conexión del contenedor. Para usar
+sonido en Linux puede ser necesario exponer el dispositivo de audio; se puede
+usar `--mute` pasando `python pin_simulator.py --mute` al final del comando.
+En Windows y macOS se recomienda ejecutar Python directamente.
